@@ -64,3 +64,46 @@ A list of available commands.
 feature <name_of_branch>
 # => git checkout -b feature/<name_of_branch> development
 ```
+
+```
+bug <name_of_branch>
+# => git checkout -b bug/<name_of_branch> development
+```
+
+```
+release <name_of_branch>
+# => git checkout -b release/<name_of_branch> development
+```
+
+```
+hotfix <name_of_branch>
+# => git checkout -b hotfix/<name_of_branch> master
+```
+
+```
+commit <commit_message>
+# => git add .
+# => git commit -m "<commit_message>"
+```
+
+```
+branches
+# => git branch
+```
+
+```
+delete_local_branch <name_of_branch>
+# => git branch -d <name_of_branch>
+```
+
+```
+delete_remote_branch <name_of_branch>
+# => git push origin --delete <name_of_branch>
+```
+
+```
+delete_branch <name_of_branch>
+# => Are you sure? (Y/N): <confirm>
+# => git branch -d <name_of_branch>
+# => git push origin --delete <name_of_branch>
+```
