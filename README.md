@@ -82,64 +82,64 @@ A list of available commands.
 ### Creating new branches
 
 ```
-# Must branch from development
 $ feature <name_of_branch>
 # => git checkout -b feature/<name_of_branch> development
+# Must branch from development
 ```
 
 ```
-# Must branch from development
 $ bug <name_of_branch>
 # => git checkout -b bug/<name_of_branch> development
+# Must branch from development
 ```
 
 ```
-# Must branch from development
 $ release <name_of_branch>
 # => git checkout -b release/<name_of_branch> development
+# Must branch from development
 ```
 
 ```
-# Must branch from master
 $ hotfix <name_of_branch>
 # => git checkout -b hotfix/<name_of_branch> master
+# Must branch from master
 ```
 
 ### Committing code
 
 ```
-# Shortcut for committing code; you do not have to use quotes ("...")
 $ commit <commit_message>
 # => git add .
 # => git commit -m "<commit_message>"
+# Shortcut for committing code; you do not have to use quotes ("...")
 ```
 
 ### Listing branches
 
 ```
-# Current branch marked by '*'
 $ branches
 # => git branch
+# Current branch marked by '*'
 ```
 
 ### Deleting branches
 
 ```
-# Delete branch in local repo only
 $ delete_local_branch <name_of_branch>
 # => git branch -d <name_of_branch>
+# Delete branch in local repo only
 ```
 
 ```
-# Delete branch in remote repo only
 $ delete_remote_branch <name_of_branch>
 # => git push origin --delete <name_of_branch>
+# Delete branch in remote repo only
 ```
 
 ```
-# Delete branch in both local and remote repos
 $ delete_branch <name_of_branch>
 # => Are you sure? (Y/N): <confirm>
 # => git branch -d <name_of_branch>
 # => git push origin --delete <name_of_branch>
+# Delete branch in both local and remote repos
 ```
