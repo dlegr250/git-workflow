@@ -6,6 +6,17 @@ This script requires the following scripts in order to work properly:
 
 You can find these 2 files in this repo under `dependencies/*` or download the latest from the above URLs.
 
+# Installation
+
+Download `git-extensions.sh` and store in some directory. I recommend `~/scripts` as a useful location.
+
+In your `.bash_profile` (loaded on terminal start) source this script file:
+
+```
+# ~/.bash_profile
+source ~/scripts/git-extensions.sh
+```
+
 # Overview
 
 A shell script that helps enforce a [git workflow](http://nvie.com/posts/a-successful-git-branching-model/).
@@ -55,17 +66,6 @@ feature name of branch
 ```
 feature name-of-branch
 # => git checkout -b feature/name-of-branch development
-```
-
-# Installation
-
-Download `git-extensions.sh` and store in some directory. I recommend `~/scripts` as a useful location.
-
-In your `.bash_profile` (loaded on terminal start) source this script file:
-
-```
-# ~/.bash_profile
-source ~/scripts/git-extensions.sh
 ```
 
 # Commands
