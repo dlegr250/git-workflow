@@ -20,8 +20,8 @@ source ~/scripts/git-workflow.sh
 Make the script executable so it may be called in your terminal:
 
 ```
-cd ~/scripts
-chmod +x git-workflow.sh
+$ cd ~/scripts
+$ chmod +x git-workflow.sh
 ```
 
 # Overview
@@ -52,12 +52,12 @@ There is a strict process for where branches may come from and where they may be
 When you use the commands, it will automatically prefix the branch name with the appropriate type of branch.  For instance:
 
 ```
-feature name-of-new-feature-branch
+$ feature name-of-new-feature-branch
 # => git checkout -b feature/name-of-new-feature-branch development
 ```
 
 ```
-hotfix name-of-new-hotfix-branch
+$ hotfix name-of-new-hotfix-branch
 # => git checkout -b hotfix/name-of-new-hotfix-branch master
 ```
 
@@ -66,12 +66,12 @@ You do not need to prefix your branch names with `feature/...`, `bug/...` if you
 You can provide branch names either with or without spaces.
 
 ```
-feature name of branch
+$ feature name of branch
 # => git checkout -b feature/name-of-branch development
 ```
 
 ```
-feature name-of-branch
+$ feature name-of-branch
 # => git checkout -b feature/name-of-branch development
 ```
 
@@ -83,25 +83,25 @@ A list of available commands.
 
 ```
 # Must branch from development
-feature <name_of_branch>
+$ feature <name_of_branch>
 # => git checkout -b feature/<name_of_branch> development
 ```
 
 ```
 # Must branch from development
-bug <name_of_branch>
+$ bug <name_of_branch>
 # => git checkout -b bug/<name_of_branch> development
 ```
 
 ```
 # Must branch from development
-release <name_of_branch>
+$ release <name_of_branch>
 # => git checkout -b release/<name_of_branch> development
 ```
 
 ```
 # Must branch from master
-hotfix <name_of_branch>
+$ hotfix <name_of_branch>
 # => git checkout -b hotfix/<name_of_branch> master
 ```
 
@@ -109,7 +109,7 @@ hotfix <name_of_branch>
 
 ```
 # Shortcut for committing code; you do not have to use quotes ("...")
-commit <commit_message>
+$ commit <commit_message>
 # => git add .
 # => git commit -m "<commit_message>"
 ```
@@ -118,7 +118,7 @@ commit <commit_message>
 
 ```
 # Current branch marked by '*'
-branches
+$ branches
 # => git branch
 ```
 
@@ -126,19 +126,19 @@ branches
 
 ```
 # Delete branch in local repo only
-delete_local_branch <name_of_branch>
+$ delete_local_branch <name_of_branch>
 # => git branch -d <name_of_branch>
 ```
 
 ```
 # Delete branch in remote repo only
-delete_remote_branch <name_of_branch>
+$ delete_remote_branch <name_of_branch>
 # => git push origin --delete <name_of_branch>
 ```
 
 ```
 # Delete branch in both local and remote repos
-delete_branch <name_of_branch>
+$ delete_branch <name_of_branch>
 # => Are you sure? (Y/N): <confirm>
 # => git branch -d <name_of_branch>
 # => git push origin --delete <name_of_branch>
