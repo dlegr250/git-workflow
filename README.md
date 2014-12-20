@@ -4,7 +4,7 @@ This script requires the following scripts in order to work properly:
 * [official git/git-completion.bash](https://github.com/git/git/blob/master/contrib/completion/git-completion.bash)
 * [official git/git-prompt.sh](https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh)
 
-You can find these 2 files in this repo or download the latest from the above URLs.
+You can find these 2 files in this repo under `dependencies/*` or download the latest from the above URLs.
 
 # Overview
 
