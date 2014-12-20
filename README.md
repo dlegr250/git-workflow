@@ -60,6 +60,8 @@ source ~/scripts/git-extensions.sh
 
 A list of available commands.
 
+### Creating new branches
+
 ```
 feature <name_of_branch>
 # => git checkout -b feature/<name_of_branch> development
@@ -80,16 +82,22 @@ hotfix <name_of_branch>
 # => git checkout -b hotfix/<name_of_branch> master
 ```
 
+### Committing code
+
 ```
 commit <commit_message>
 # => git add .
 # => git commit -m "<commit_message>"
 ```
 
+### Listing branches
+
 ```
 branches
 # => git branch
 ```
+
+### Deleting branches
 
 ```
 delete_local_branch <name_of_branch>
