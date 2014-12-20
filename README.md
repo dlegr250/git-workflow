@@ -10,7 +10,9 @@ Download `git-extensions.sh` and store in some directory. I recommend `~/scripts
 
 In your `.bash_profile` (loaded on terminal start) source this script file:
 
-`source ~/scripts/git-extensions.sh` (or wherever you stored your script).
+```
+source ~/scripts/git-extensions.sh
+```
 
 # Usage
 
