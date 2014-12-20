@@ -28,7 +28,9 @@ When you use the commands, it will automatically prefix the branch name with the
 ```
 feature name-of-new-feature-branch
 # => git checkout -b feature/name-of-new-feature-branch development
+```
 
+```
 hotfix name-of-new-hotfix-branch
 # => git checkout -b hotfix/name-of-new-hotfix-branch master
 ```
@@ -40,7 +42,9 @@ You can provide branch names either with or without spaces.
 ```
 feature name of branch
 # => git checkout -b feature/name-of-branch development
+```
 
+```
 feature name-of-branch
 # => git checkout -b feature/name-of-branch development
 ```
