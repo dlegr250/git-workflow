@@ -1,3 +1,11 @@
+# Dependencies
+
+This script requires the following scripts in order to work properly:
+* [official git/git-completion.bash](https://github.com/git/git/blob/master/contrib/completion/git-completion.bash)
+* [official git/git-prompt.sh](https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh)
+
+You can find these 2 files in this repo or download the latest from the above URLs.
+
 # Overview
 
 A shell script that helps enforce a [git workflow](http://nvie.com/posts/a-successful-git-branching-model/).
