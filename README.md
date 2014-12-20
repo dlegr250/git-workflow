@@ -14,6 +14,7 @@ In your `.bash_profile` (loaded on terminal start) source this script file:
 
 ```
 # ~/.bash_profile
+export "PATH=$PATH:~/scripts"    # Add to $PATH
 source ~/scripts/git-workflow.sh
 ```
 
