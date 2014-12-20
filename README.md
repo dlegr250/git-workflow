@@ -8,7 +8,7 @@ It assumes you have 2 permanent branches:
 * `development` => where all new features come from
 * `master` => production-ready code (head of master corresponds to current production code)
 
-There is a strict process for where branches may come from and where they may be merge to.
+There is a strict process for where branches may come from and where they may be merged to.
 
 * feature branches
   * from: development
