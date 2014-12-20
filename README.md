@@ -8,13 +8,13 @@ You can find these 2 files in this repo under `dependencies/*` or download the l
 
 # Installation
 
-Download `git-extensions.sh` and store in some directory. I recommend `~/scripts` as a useful location.
+Download `git-workflow.sh` and store in some directory. I recommend `~/scripts` as a useful location.
 
 In your `.bash_profile` (loaded on terminal start) source this script file:
 
 ```
 # ~/.bash_profile
-source ~/scripts/git-extensions.sh
+source ~/scripts/git-workflow.sh
 ```
 
 Make the script executable so it may be called in your terminal:
