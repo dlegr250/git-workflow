@@ -8,8 +8,7 @@ It includes shell functions that will be loaded into your terminal. It may confl
 
 Download `git-extensions.sh` and store in some directory. I recommend `~/scripts` as a useful location.
 
-In your `.bash_profile` (loaded on terminal start):
-
+In your `.bash_profile` (loaded on terminal start) source this script file:
 `source ~/scripts/git-extensions.sh` (or wherever you stored your script).
 
 # Usage
