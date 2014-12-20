@@ -17,6 +17,13 @@ In your `.bash_profile` (loaded on terminal start) source this script file:
 source ~/scripts/git-extensions.sh
 ```
 
+Make the script executable so it may be called in your terminal:
+
+```
+cd ~/scripts
+chmod +x git-workflow.sh
+```
+
 # Overview
 
 A shell script that helps enforce a [git workflow](http://nvie.com/posts/a-successful-git-branching-model/).
