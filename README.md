@@ -22,20 +22,7 @@ There is a strict process for where branches may come from and where they may be
 * hotfix branches
   * from: master
   *   to: develoment and master (deploy automatically to develoment/production environments)
-
-# Installation
-
-Download `git-extensions.sh` and store in some directory. I recommend `~/scripts` as a useful location.
-
-In your `.bash_profile` (loaded on terminal start) source this script file:
-
-```
-# ~/.bash_profile
-source ~/scripts/git-extensions.sh
-```
-
-# Usage
-
+ 
 When you use the commands, it will automatically prefix the branch name with the appropriate type of branch.  For instance:
 
 ```
@@ -56,6 +43,17 @@ feature name of branch
 
 feature name-of-branch
 # => git checkout -b feature/name-of-branch development
+```
+
+# Installation
+
+Download `git-extensions.sh` and store in some directory. I recommend `~/scripts` as a useful location.
+
+In your `.bash_profile` (loaded on terminal start) source this script file:
+
+```
+# ~/.bash_profile
+source ~/scripts/git-extensions.sh
 ```
 
 # Commands
