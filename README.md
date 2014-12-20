@@ -11,17 +11,17 @@ It assumes you have 2 permanent branches:
 There is a strict process for where branches may come from and where they may be merge to.
 
 * feature branches
-  ** from: development
-  **   to: development (deploy automatically to development/test environments)
+  * from: development
+  *   to: development (deploy automatically to development/test environments)
 * bug branches
-  ** from: development
-  **   to: development (deploy automatically to development environment)
+  * from: development
+  *   to: development (deploy automatically to development environment)
 * release branches
-  ** from: development
-  **   to: development and master (deploy automatically to production environment)
+  * from: development
+  *   to: development and master (deploy automatically to production environment)
 * hotfix branches
-  ** from: master
-  **   to: develoment and master (deploy automatically to develoment/production environments)
+  * from: master
+  *   to: develoment and master (deploy automatically to develoment/production environments)
 
 # Installation
 
