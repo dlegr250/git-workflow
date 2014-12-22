@@ -48,6 +48,20 @@ __current_git_branch() {
   git rev-parse --abbrev-ref HEAD
 }
 
+# Extract type of branch: feature/name => feature
+__current_type_of_git_branch() {
+  local current_branch_name=$(__current_git_branch)
+
+  # BUG: [: too many arguments
+  if [ "$current_branch_name" == *"/"* ]; then
+    IFS="/"
+    set -- $current_branch_name
+    echo $1
+  else
+    echo "-----> ERROR: invalid branch name; no '/' separator found."
+  fi
+}
+
 __no_branch_name_error_message() {
   echo "-----> ERROR: No branch name given!"
 }
@@ -91,7 +105,23 @@ feature() {
 # New bug/... branch
 # From release to development/release
 bug() {
-  echo "-----> TODO..."
+  __current_dir_has_git || return
+  if [ -z "$1" ]; then
+    __no_branch_name_error_message
+  else
+    if [ "$(__current_type_of_git_branch)" != "release" ]; then
+      echo "-----> ERROR: Bug branches must branch from a 'release/...' branch."
+      echo "-----> Stash or commit your local changes then checkout a 'release/...' branch."
+    else
+      local new_branch_name=$(__join_text_with_hyphens $*)
+      local cmd="git checkout -b bug/$new_branch_name $(__current_git_branch)"
+
+      echo "* Repo: $(__git_repo_url)"
+      echo "* From: $(__current_git_branch)"
+      echo "*   To: bug/$new_branch_name"
+      echo "=> $cmd"
+    fi
+  fi
 }
 
 # New refactor/... branch
