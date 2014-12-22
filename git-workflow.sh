@@ -57,7 +57,11 @@ __git_repo_name() {
   echo $1
 }
 
-# Does the current dir have a .git directory?
+__git_pull_request_url() {
+  echo "https://$(__git_repo_host)/$(__git_repo_owner)/$(__git_repo_name)/compare"
+}
+
+# Inform user if there is not a .git directory
 # See: http://stackoverflow.com/a/27552913/667772
 __current_dir_using_git() {
   local dir=${1:-$PWD}             # allow optional argument
@@ -82,6 +86,7 @@ __current_branch_type() {
   fi
 }
 
+# "some string    text" => "some-string-text"
 __join_text_with_hyphens() {
   local new_branch_name=""
   local i=0
@@ -89,7 +94,7 @@ __join_text_with_hyphens() {
     new_branch_name="$new_branch_name-$i"
   done
 
-  # Strip out leading '-'
+  # Strip out leading '-' (-some-string-text => some-string-text)
   echo ${new_branch_name:1}
 }
 
@@ -238,8 +243,12 @@ checkout() {
 development() {
   __current_dir_using_git || return
 
-  echo "=> checkout development"
-  checkout "development"
+  local cmd="checkout development"
+  $cmd
+}
+
+tags() {
+  git tag
 }
 
 # Update branches
@@ -249,38 +258,107 @@ development() {
 commit() {
   __current_dir_using_git || return
 
+  local current_branch=$(__current_branch)
+
   if [ -z "$1" ]; then
     echo "-----> ERROR: Must provide a commit message!"
     echo "Usage: commit <message>"
-  elif [ "$(__current_branch)" == "master" ]; then
+  elif [ "$current_branch" == "master" ]; then
     echo "-----> ERROR: cannot commit code directly to master (production) branch!"
   else
     echo "=> git add ."
     echo "=> git commit -m '$*'"
+    echo "=> git push --set-upstream origin $current_branch"
     git add .
     git commit -m "$1"
-    git push --set-upstream origin $(__current_branch)
+    git push --set-upstream origin $current_branch
   fi
 }
 
-# Opens browser to submit pull request to appropriate branch
+# Opens browser to submit pull request to appropriate branch.
+#   Certain types of branches can only branch from/to select branches.
+#     feature: from develop to develop (deploy to development/test)
+#     bug:     from develop to develop (deploy to development)
+#     release: from develop to develop/master (deploy to production)
+#     hotfix:  from master  to develop/master (deploy to development/production)
 pull_request() {
   __current_dir_using_git || return
+
   local current_branch=$(__current_branch)
   local current_branch_type=$(__current_branch_type)
+  local cmd=""
 
   if [ "$current_branch" == "master" ]; then
-    echo "-----> ERROR: cannot submit code directly to master (production) branch!"
-  if [ "$current_branch_type" == "feature" ]; then
-    echo "=> submitting Pull Request to development..."
-    open "$__git_repo_host)/$(__git_repo_owner)/$(__git_repo_name)/compare/development...$(__current_branch)?expand=1"
+    echo "-----> ERROR: cannot submit code directly from master (production) branch!"
+
+  # feature to development
+  elif [ "$current_branch_type" == "feature" ]; then
+    echo "=> submitting Pull Request to development (opens browser)..."
+    open "$(__git_pull_request_url)/development...$current_branch?expand=1"
+
+  # bug to development
+  elif [ "$current_branch_type" == "bug" ]; then
+    echo "=> submitting Pull Request to development (opens browser)..."
+    open "$(__git_pull_request_url)/development...$current_branch?expand=1"
+
+  # refactor to development
+  elif [ "$current_branch_type" == "refactor" ]; then
+    echo "=> submitting Pull Request to development (opens browser)..."
+    open "$(__git_pull_request_url)/development...$current_branch?expand=1"
+
+  # release to development/master
+  elif [ "$current_branch_type" == "release" ]; then
+    echo "Pushing from a RELEASE branch constitutes a code DEPLOY to master and will:"
+    echo "* Automatically merge this release branch with development"
+    echo "* Submit a Pull Request to the master branch"
+    echo "* You may have to manually resolve merge conflicts"
+    echo ""
+
+    # Confirm deployment merges
+    # tput changes text color
+    read -p "$(tput setaf 1)Are you sure you want to submit a Pull Request to master? (Y/N): $(tput sgr 0)" -r
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      echo ""
+      echo "* Merging code to development..."
+      cmd="git merge --no-ff $current_branch development"
+      echo "  => $cmd"
+      $cmd
+
+      echo "=> submitting Pull Request to master (opens browser)..."
+      open "$(__git_pull_request_url)/$current_branch?expand=1"
+    else
+      echo ""
+      echo "Push stopped. No code merged to any branches."
+    fi
+
+  # hotfix to development/master
+  # elif [ "$current_branch_type" == "hotfix" ]; then
+  #   echo "=> submitting Pull Request to development and master..."
+  #   open "$(__git_pull_request_url)/development...$current_branch?expand=1"
   else
     echo "-----> ERROR: invalid branch to submit Pull Request from/to!"
   fi
 }
 
-push() {
+tag() {
   __current_dir_using_git || return
+
+  local cmd=""
+
+  read -p "* Release tag version: " -r
+  local tag_version=$REPLY
+
+  read -p "* Release tag message: " -r
+  local tag_message=$REPLY
+
+  echo "* Tagging $(__current_branch)..."
+  echo "  => git tag -a VERSION -m MESSAGE"
+  git tag -a $tag_version -m "$tag_message"
+
+  echo "* Pushing tag to remote..."
+  cmd="git push origin $tag_version"
+  echo "  => $cmd"
+  $cmd
 }
 
 # Delete branches
@@ -288,6 +366,8 @@ push() {
 
 # Only delete local branch
 delete_local_branch() {
+  __current_dir_using_git || return
+
   if [ -z "$1" ]; then
     echo "-----> ERROR: No branch name given!"
     echo "Usage: delete_local_branch <branch_name>"
@@ -300,6 +380,8 @@ delete_local_branch() {
 
 # Only delete remote branch
 delete_remote_branch() {
+  __current_dir_using_git || return
+
   if [ -z "$1" ]; then
     echo "-----> ERROR: No branch name given!"
     echo "Usage: delete_local_branch <branch_name>"
@@ -313,7 +395,7 @@ delete_remote_branch() {
 # Delete both local and remote branch
 delete_branch() {
   # Have user confirm they want to completely delete this branch
-  read -p "Are you sure? (Y/N): " -r
+  read -p "$(tput setaf 1)Are you sure? (Y/N):$(tput sgr 0) " -r
 
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo "Deleting branch from both local and remote repos"
@@ -335,6 +417,15 @@ delete_branch() {
 git_workflow() {
   if [ "$1" == "-v" ]; then
     echo "$(__git_workflow_version)"
+  elif [ "$1" == "rules" ]; then
+    echo "* feature"
+    echo "    development -> development (deploy to development/test)"
+    echo "* bug"
+    echo "    development -> development (deploy to development)"
+    echo "* release"
+    echo "    development -> development/master (deploy to production)"
+    echo "* hotfix"
+    echo "    master      -> development/master (deploy to development/production)"
   else
     echo "version: $(__git_workflow_version)"
     echo ""

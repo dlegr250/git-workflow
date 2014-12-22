@@ -127,12 +127,32 @@ $ pull_request
 format for Pull Requests (different from git `request-pull`) so this script cannot fully automate that process.
 ```
 
+### Checkout branches
+
+```
+$ checkout <name_of_branch>
+# => git checkout <name_of_branch>
+# Checkout the branch
+```
+
+```
+$ development
+# => git checkout development
+# Shortcut to checkout the development branch
+```
+
 ### Listing branches
 
 ```
 $ branches
 # => git branch
 # Current branch marked by '*'
+```
+
+```
+$ tags
+# => git tag
+# List tags
 ```
 
 ### Deleting branches
