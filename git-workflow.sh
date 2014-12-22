@@ -266,7 +266,7 @@ delete_branch() {
   fi
 }
 
-# Merge
+# Merge 
 #----------------------------------------------------------------------
 
 # Certain types of branches can only branch from/to select branches
