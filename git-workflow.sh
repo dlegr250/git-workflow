@@ -269,6 +269,8 @@ pull_request() {
   local current_branch=$(__current_branch)
   local current_branch_type=$(__current_branch_type)
 
+  if [ "$current_branch" == "master" ]; then
+    echo "-----> ERROR: cannot submit code directly to master (production) branch!"
   if [ "$current_branch_type" == "feature" ]; then
     echo "=> submitting Pull Request to development..."
     open "$__git_repo_host)/$(__git_repo_owner)/$(__git_repo_name)/compare/development...$(__current_branch)?expand=1"
