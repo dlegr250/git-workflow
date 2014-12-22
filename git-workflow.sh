@@ -348,7 +348,7 @@ git_workflow() {
     echo "COMMITTING"
     echo "----------"
     echo "* commit <message> : commit changes locally and push remotely"
-    echo "* pull_request : submit Pull Request to remote (opens browser)"
+    echo "* pull_request     : submit Pull Request to remote (opens browser)"
     echo ""
     echo "DELETING"
     echo "--------"
