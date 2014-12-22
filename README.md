@@ -18,6 +18,10 @@ export "PATH=$PATH:~/scripts"    # Add to $PATH
 source ~/scripts/git-workflow.sh
 ```
 
+If you wish to work on the script and submit Pull Requests, I recommend putting it in your
+normal project/app directory and then source it from that location so that your
+changes will automatically update your terminal source.
+
 Make the script executable so it may be called in your terminal:
 
 ```
@@ -49,7 +53,7 @@ There is a strict process for where branches may come from and where they may be
 * hotfix branches
   * from: master
   *   to: develoment and master (deploy automatically to develoment/production environments)
- 
+
 When you use the commands, it will automatically prefix the branch name with the appropriate type of branch.  For instance:
 
 ```
@@ -143,4 +147,18 @@ $ delete_branch <name_of_branch>
 # => git branch -d <name_of_branch>
 # => git push origin --delete <name_of_branch>
 # Delete branch in both local and remote repos
+```
+
+### Help/Usage
+
+```
+$ git_workflow
+# => ...
+# => Displays usage commands
+```
+
+```
+$ git_workflow -v
+# => x.x.x
+# Displays version
 ```
