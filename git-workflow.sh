@@ -270,7 +270,7 @@ commit() {
     echo "=> git commit -m '$*'"
     echo "=> git push --set-upstream origin $current_branch"
     git add .
-    git commit -m "$1"
+    git commit -m "$*"
     git push --set-upstream origin $current_branch
   fi
 }
