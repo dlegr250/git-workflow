@@ -352,7 +352,7 @@ tag() {
   local tag_message=$REPLY
 
   echo "* Tagging $(__current_branch)..."
-  echo "  => git tag -a VERSION -m MESSAGE"
+  echo "  => git tag -a $tag_version -m '$tag_message'"
   git tag -a $tag_version -m "$tag_message"
 
   echo "* Pushing tag to remote..."
@@ -403,6 +403,23 @@ delete_branch() {
     delete_remote_branch $1
   else
     echo "Canceling delete; no branches were deleted."
+  fi
+}
+
+delete_tag() {
+  __current_dir_using_git || return
+
+  if [ -z "$1" ]; then
+    echo "-----> ERROR: no tag name given!"
+    echo "Usage: delete_tag <tag_name>"
+  else
+    echo "* Deleting tag from both local and remote repos"
+    local cmd="git tag -d $1"
+    echo "=> $cmd"
+    $cmd
+    local remote_cmd="git push origin :refs/tags/$1"
+    echo "=> $remote_cmd"
+    $remote_cmd
   fi
 }
 
