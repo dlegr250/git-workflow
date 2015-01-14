@@ -406,20 +406,45 @@ delete_branch() {
   fi
 }
 
-delete_tag() {
+# Delete tags
+#----------------------------------------------------------------------
+
+delete_local_tag() {
   __current_dir_using_git || return
 
   if [ -z "$1" ]; then
-    echo "-----> ERROR: no tag name given!"
-    echo "Usage: delete_tag <tag_name>"
+    echo "-----> ERROR: No tag name given!"
+    echo "Usage: delete_local_tag <tag_name>"
   else
-    echo "* Deleting tag from both local and remote repos"
     local cmd="git tag -d $1"
     echo "=> $cmd"
     $cmd
-    local remote_cmd="git push origin :refs/tags/$1"
-    echo "=> $remote_cmd"
-    $remote_cmd
+  fi
+}
+
+delete_remote_tag() {
+  __current_dir_using_git || return
+
+  if [ -z "$1" ]; then
+    echo "-----> ERROR: No tag name given!"
+    echo "Usage: delete_remote_tag <tag_name>"
+  else
+    local cmd="git push origin :refs/tags/$1"
+    echo "=> $cmd"
+    $cmd
+  fi
+}
+
+delete_tag() {
+  # Have user confirm they want to completely delete this branch
+  read -p "$(tput setaf 1)Are you sure? (Y/N):$(tput sgr 0) " -r
+
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    echo "* Deleting tag from both local and remote repos"
+    delete_local_tag $1
+    delete_remote_tag $1
+  else
+    echo "Canceling delete; no tags were deleted."
   fi
 }
 
@@ -463,6 +488,12 @@ git_workflow() {
     echo "* delete_local_branch  <branch> : delete local branch only"
     echo "* delete_remote_branch <branch> : delete remote branch only"
     echo "* delete_branch        <branch> : completely delete branch locally and remotely"
+    echo "* delete_local_tag     <tag>    : delete local tag only"
+    echo "* delete_remote_tag    <tag>    : delete remote tag only"
+    echo "* delete_tag           <tag>    : completely delete branch locally and remotely"
     echo ""
+    echo "TAGGING"
+    echo "-------"
+    echo "* tag : interactively create annotated tag"
   fi
 }
