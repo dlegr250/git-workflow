@@ -17,7 +17,7 @@
 #----------------------------------------------------------------------
 
 __git_workflow_version() {
-  echo "1.2.0"
+  echo "1.2.1"
 }
 
 # Absolute URL of git repo (git@<host>:<owner>/<repo>.git)
@@ -399,8 +399,8 @@ delete-branch() {
 
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo "Deleting branch from both local and remote repos"
-    delete_local_branch $1
-    delete_remote_branch $1
+    delete-local-branch $1
+    delete-remote-branch $1
   else
     echo "Canceling delete; no branches were deleted."
   fi
@@ -441,8 +441,8 @@ delete-tag() {
 
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo "* Deleting tag from both local and remote repos"
-    delete_local_tag $1
-    delete_remote_tag $1
+    delete-local-tag $1
+    delete-remote-tag $1
   else
     echo "Canceling delete; no tags were deleted."
   fi
