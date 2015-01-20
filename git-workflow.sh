@@ -17,7 +17,7 @@
 #----------------------------------------------------------------------
 
 __git_workflow_version() {
-  echo "1.1.0"
+  echo "1.2.0"
 }
 
 # Absolute URL of git repo (git@<host>:<owner>/<repo>.git)
@@ -281,7 +281,7 @@ commit() {
 #     bug:     from develop to develop (deploy to development)
 #     release: from develop to develop/master (deploy to production)
 #     hotfix:  from master  to develop/master (deploy to development/production)
-pull_request() {
+pull-request() {
   __current_dir_using_git || return
 
   local current_branch=$(__current_branch)
@@ -365,7 +365,7 @@ tag() {
 #----------------------------------------------------------------------
 
 # Only delete local branch
-delete_local_branch() {
+delete-local-branch() {
   __current_dir_using_git || return
 
   if [ -z "$1" ]; then
@@ -379,7 +379,7 @@ delete_local_branch() {
 }
 
 # Only delete remote branch
-delete_remote_branch() {
+delete-remote-branch() {
   __current_dir_using_git || return
 
   if [ -z "$1" ]; then
@@ -393,7 +393,7 @@ delete_remote_branch() {
 }
 
 # Delete both local and remote branch
-delete_branch() {
+delete-branch() {
   # Have user confirm they want to completely delete this branch
   read -p "$(tput setaf 1)Are you sure? (Y/N):$(tput sgr 0) " -r
 
@@ -409,7 +409,7 @@ delete_branch() {
 # Delete tags
 #----------------------------------------------------------------------
 
-delete_local_tag() {
+delete-local-tag() {
   __current_dir_using_git || return
 
   if [ -z "$1" ]; then
@@ -422,7 +422,7 @@ delete_local_tag() {
   fi
 }
 
-delete_remote_tag() {
+delete-remote-tag() {
   __current_dir_using_git || return
 
   if [ -z "$1" ]; then
@@ -435,7 +435,7 @@ delete_remote_tag() {
   fi
 }
 
-delete_tag() {
+delete-tag() {
   # Have user confirm they want to completely delete this branch
   read -p "$(tput setaf 1)Are you sure? (Y/N):$(tput sgr 0) " -r
 
@@ -456,7 +456,7 @@ delete_tag() {
 # Help
 #----------------------------------------------------------------------
 
-git_workflow() {
+git-workflow() {
   if [ "$1" == "-v" ]; then
     echo "$(__git_workflow_version)"
   elif [ "$1" == "rules" ]; then

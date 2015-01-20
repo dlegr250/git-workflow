@@ -121,7 +121,7 @@ $ commit <commit_message>
 ```
 
 ```
-$ pull_request
+$ pull-request
 # => submit Pull Request to remote
 # Opens browser with appropriate from/to branch options. Github utilizes their own
 format for Pull Requests (different from git `request-pull`) so this script cannot fully automate that process.
@@ -158,19 +158,19 @@ $ tags
 ### Deleting branches
 
 ```
-$ delete_local_branch <name_of_branch>
+$ delete-local-branch <name_of_branch>
 # => git branch -d <name_of_branch>
 # Delete branch in local repo only
 ```
 
 ```
-$ delete_remote_branch <name_of_branch>
+$ delete-remote-branch <name_of_branch>
 # => git push origin --delete <name_of_branch>
 # Delete branch in remote repo only
 ```
 
 ```
-$ delete_branch <name_of_branch>
+$ delete-branch <name_of_branch>
 # => Are you sure? (Y/N): <confirm>
 # => git branch -d <name_of_branch>
 # => git push origin --delete <name_of_branch>
@@ -180,13 +180,13 @@ $ delete_branch <name_of_branch>
 ### Help/Usage
 
 ```
-$ git_workflow
+$ git-workflow
 # => ...
 # Displays usage commands
 ```
 
 ```
-$ git_workflow -v
+$ git-workflow -v
 # => x.x.x
 # Displays version
 ```
