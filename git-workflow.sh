@@ -17,7 +17,7 @@
 #----------------------------------------------------------------------
 
 __git_workflow_version() {
-  echo "1.2.1"
+  echo "1.3.0"
 }
 
 # Absolute URL of git repo (git@<host>:<owner>/<repo>.git)
@@ -124,22 +124,22 @@ feature() {
   fi
 }
 
-# New bug/... branch; from release
+# New bug/... branch; from development
 bug() {
   __current_dir_using_git || return
 
   if [ -z "$1" ]; then
     echo "-----> ERROR: No branch name given!"
   else
-    if [ "$(__current_branch_type)" != "release" ]; then
-      echo "-----> ERROR: Bug branches must branch from a 'release/...' branch."
-      echo "-----> Stash or commit your local changes then checkout a 'release/...' branch."
+    if [ "$(__current_branch_type)" != "development" ]; then
+      echo "-----> ERROR: Bug branches must branch from the 'development' branch."
+      echo "-----> Stash or commit your local changes then checkout the 'development' branch."
     else
       local new_branch_name=$(__join_text_with_hyphens $*)
-      local cmd="git checkout -b bug/$new_branch_name $(__current_branch)"
+      local cmd="git checkout -b bug/$new_branch_name development"
 
       echo "* Repo: $(__git_repo_url)"
-      echo "* From: $(__current_branch)"
+      echo "* From: development"
       echo "*   To: bug/$new_branch_name"
       echo "=> $cmd"
       $cmd
@@ -474,7 +474,7 @@ git-workflow() {
     echo "BRANCHING"
     echo "---------"
     echo "* feature <branch> : create new feature branch from development"
-    echo "* bug     <branch> : create new bug branch from release"
+    echo "* bug     <branch> : create new bug branch from development"
     echo "* release <branch> : create new release branch from development"
     echo "* hotfix  <branch> : create new hotfix branch from master (production)"
     echo ""
