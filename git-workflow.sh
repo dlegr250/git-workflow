@@ -131,7 +131,7 @@ bug() {
   if [ -z "$1" ]; then
     echo "-----> ERROR: No branch name given!"
   else
-    if [ "$(__current_branch_type)" != "development" ]; then
+    if [ "$(__current_branch)" != "development" ]; then
       echo "-----> ERROR: Bug branches must branch from the 'development' branch."
       echo "-----> Stash or commit your local changes then checkout the 'development' branch."
     else
