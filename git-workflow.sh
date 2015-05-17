@@ -378,11 +378,6 @@ delete-local-branch() {
   fi
 }
 
-# Alias
-dlb() {
-  delete-local-branch
-}
-
 # Only delete remote branch
 delete-remote-branch() {
   __current_dir_using_git || return
@@ -397,11 +392,6 @@ delete-remote-branch() {
   fi
 }
 
-# Alias
-drb() {
-  delete-remote-branch
-}
-
 # Delete both local and remote branch
 delete-branch() {
   # Have user confirm they want to completely delete this branch
@@ -414,11 +404,6 @@ delete-branch() {
   else
     echo "Canceling delete; no branches were deleted."
   fi
-}
-
-# Alias
-db() {
-  delete-branch
 }
 
 # Delete tags
@@ -467,6 +452,13 @@ delete-tag() {
 #----------------------------------------------------------------------
 
 # NOOP
+
+# Aliases
+#----------------------------------------------------------------------
+
+alias db="delete-branch"
+alias dlb="delete-local-branch"
+alias drb="delete-remote-branch"
 
 # Help
 #----------------------------------------------------------------------
