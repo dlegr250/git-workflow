@@ -453,6 +453,13 @@ delete-tag() {
 
 # NOOP
 
+# Aliases
+#----------------------------------------------------------------------
+
+alias db="delete-branch"
+alias dlb="delete-local-branch"
+alias drb="delete-remote-branch"
+
 # Help
 #----------------------------------------------------------------------
 
@@ -485,12 +492,15 @@ git-workflow() {
     echo ""
     echo "DELETING"
     echo "--------"
-    echo "* delete_local_branch  <branch> : delete local branch only"
-    echo "* delete_remote_branch <branch> : delete remote branch only"
-    echo "* delete_branch        <branch> : completely delete branch locally and remotely"
-    echo "* delete_local_tag     <tag>    : delete local tag only"
-    echo "* delete_remote_tag    <tag>    : delete remote tag only"
-    echo "* delete_tag           <tag>    : completely delete branch locally and remotely"
+    echo "* delete-local-branch  <branch> : delete local branch only"
+    echo "* dlb (alias)          <branch> : alias for delete-local-branch"
+    echo "* delete-remote-branch <branch> : delete remote branch only"
+    echo "* drb (alias)          <branch> : alias for delete-remote-branch"
+    echo "* delete-branch        <branch> : completely delete branch locally and remotely"
+    echo "* db (alias)           <branch> : alias for delete-branch"
+    echo "* delete-local-tag     <tag>    : delete local tag only"
+    echo "* delete-remote-tag    <tag>    : delete remote tag only"
+    echo "* delete-tag           <tag>    : completely delete branch locally and remotely"
     echo ""
     echo "TAGGING"
     echo "-------"
