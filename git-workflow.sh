@@ -378,6 +378,11 @@ delete-local-branch() {
   fi
 }
 
+# Alias
+dlb() {
+  delete-local-branch()
+}
+
 # Only delete remote branch
 delete-remote-branch() {
   __current_dir_using_git || return
@@ -392,6 +397,11 @@ delete-remote-branch() {
   fi
 }
 
+# Alias
+drb() {
+  delete-remote-branch()
+}
+
 # Delete both local and remote branch
 delete-branch() {
   # Have user confirm they want to completely delete this branch
@@ -404,6 +414,11 @@ delete-branch() {
   else
     echo "Canceling delete; no branches were deleted."
   fi
+}
+
+# Alias
+db() {
+  delete-branch()
 }
 
 # Delete tags
@@ -485,12 +500,15 @@ git-workflow() {
     echo ""
     echo "DELETING"
     echo "--------"
-    echo "* delete_local_branch  <branch> : delete local branch only"
-    echo "* delete_remote_branch <branch> : delete remote branch only"
-    echo "* delete_branch        <branch> : completely delete branch locally and remotely"
-    echo "* delete_local_tag     <tag>    : delete local tag only"
-    echo "* delete_remote_tag    <tag>    : delete remote tag only"
-    echo "* delete_tag           <tag>    : completely delete branch locally and remotely"
+    echo "* delete-local-branch  <branch> : delete local branch only"
+    echo "* dlb (alias)          <branch> : alias for delete-local-branch"
+    echo "* delete-remote-branch <branch> : delete remote branch only"
+    echo "* drb (alias)          <branch> : alias for delete-remote-branch"
+    echo "* delete-branch        <branch> : completely delete branch locally and remotely"
+    echo "* db (alias)           <branch> : alias for delete-branch"
+    echo "* delete-local-tag     <tag>    : delete local tag only"
+    echo "* delete-remote-tag    <tag>    : delete remote tag only"
+    echo "* delete-tag           <tag>    : completely delete branch locally and remotely"
     echo ""
     echo "TAGGING"
     echo "-------"
