@@ -380,7 +380,7 @@ delete-local-branch() {
 
 # Alias
 dlb() {
-  delete-local-branch()
+  delete-local-branch
 }
 
 # Only delete remote branch
@@ -399,7 +399,7 @@ delete-remote-branch() {
 
 # Alias
 drb() {
-  delete-remote-branch()
+  delete-remote-branch
 }
 
 # Delete both local and remote branch
@@ -418,7 +418,7 @@ delete-branch() {
 
 # Alias
 db() {
-  delete-branch()
+  delete-branch
 }
 
 # Delete tags
