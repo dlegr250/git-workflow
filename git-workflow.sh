@@ -251,6 +251,10 @@ tags() {
   git tag
 }
 
+gp() {
+  git pull
+}
+
 # Update branches
 #----------------------------------------------------------------------
 
@@ -484,6 +488,7 @@ git-workflow() {
     echo "* bug     <branch> : create new bug branch from development"
     echo "* release <branch> : create new release branch from development"
     echo "* hotfix  <branch> : create new hotfix branch from master (production)"
+    echo "* gp               : git pull (alias)"
     echo ""
     echo "COMMITTING"
     echo "----------"
