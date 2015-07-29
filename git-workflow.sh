@@ -244,15 +244,31 @@ development() {
   __current_dir_using_git || return
 
   local cmd="checkout development"
+  echo "-----> $cmd"
   $cmd
 }
 
 tags() {
+  __current_dir_using_git || return
+
+  echo "-----> git tag"
   git tag
 }
 
 gp() {
-  git pull
+  __current_dir_using_git || return
+
+  local cmd="git pull"
+  echo "-----> $cmd"
+  $cmd
+}
+
+gs() {
+  __current_dir_using_git || return
+
+  local cmd="git status"
+  echo "-----> $cmd"
+  $cmd
 }
 
 # Update branches
@@ -489,6 +505,7 @@ git-workflow() {
     echo "* release <branch> : create new release branch from development"
     echo "* hotfix  <branch> : create new hotfix branch from master (production)"
     echo "* gp               : git pull (alias)"
+    echo "* gs               : git status (alias)"
     echo ""
     echo "COMMITTING"
     echo "----------"
