@@ -251,15 +251,16 @@ development() {
 tags() {
   __current_dir_using_git || return
 
-  echo "-----> git tag"
-  git tag
+  local cmd="git tag"
+  echo "=> $cmd"
+  $cmd
 }
 
 gp() {
   __current_dir_using_git || return
 
   local cmd="git pull"
-  echo "-----> $cmd"
+  echo "=> $cmd"
   $cmd
 }
 
@@ -267,7 +268,7 @@ gs() {
   __current_dir_using_git || return
 
   local cmd="git status"
-  echo "-----> $cmd"
+  echo "=> $cmd"
   $cmd
 }
 
