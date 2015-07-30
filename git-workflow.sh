@@ -243,7 +243,7 @@ checkout() {
 development() {
   __current_dir_using_git || return
 
-  local cmd="checkout development"
+  local cmd="git checkout development"
   echo "=> $cmd"
   $cmd
 }
