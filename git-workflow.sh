@@ -17,7 +17,7 @@
 #----------------------------------------------------------------------
 
 __git_workflow_version() {
-  echo "1.3.0"
+  echo "1.4.0"
 }
 
 # Absolute URL of git repo (git@<host>:<owner>/<repo>.git)
@@ -98,6 +98,11 @@ __join_text_with_hyphens() {
   echo ${new_branch_name:1}
 }
 
+# YYYY-MM-DD HH:MM format
+__timestamp() {
+  date +"%Y-%m-%d %H:%M"
+}
+
 # Create branches
 #----------------------------------------------------------------------
 
@@ -171,50 +176,50 @@ refactor() {
 }
 
 # New release/... branch; from development
-release() {
-  __current_dir_using_git || return
-
-  if [ -z "$1" ]; then
-    echo "-----> ERROR: No branch name given!"
-  else
-    if [ "$(__current_branch)" != "development" ]; then
-      echo "-----> ERROR: Release branches must branch from the 'development' branch."
-      echo "-----> Stash or commit your local changes then checkout the 'development' branch."
-    else
-      local new_branch_name=$(__join_text_with_hyphens $*)
-      local cmd="git checkout -b release/$new_branch_name development"
-
-      echo "* Repo: $(__git_repo_url)"
-      echo "* From: development"
-      echo "*   To: release/$new_branch_name"
-      echo "=> $cmd"
-      $cmd
-    fi
-  fi
-}
+# release() {
+#   __current_dir_using_git || return
+#
+#   if [ -z "$1" ]; then
+#     echo "-----> ERROR: No branch name given!"
+#   else
+#     if [ "$(__current_branch)" != "development" ]; then
+#       echo "-----> ERROR: Release branches must branch from the 'development' branch."
+#       echo "-----> Stash or commit your local changes then checkout the 'development' branch."
+#     else
+#       local new_branch_name=$(__join_text_with_hyphens $*)
+#       local cmd="git checkout -b release/$new_branch_name development"
+#
+#       echo "* Repo: $(__git_repo_url)"
+#       echo "* From: development"
+#       echo "*   To: release/$new_branch_name"
+#       echo "=> $cmd"
+#       $cmd
+#     fi
+#   fi
+# }
 
 # New hotfix/... branch; from master (production)
-hotfix() {
-  __current_dir_using_git || return
-
-  if [ -z "$1" ]; then
-    echo "-----> ERROR: No branch name given!"
-  else
-    if [ "$(__current_branch)" != "master" ]; then
-      echo "-----> ERROR: Hotfix branches must branch from the 'master' branch."
-      echo "-----> Stash or commit your local changes then checkout the 'master' branch."
-    else
-      local new_branch_name=$(__join_text_with_hyphens $*)
-      local cmd="git checkout -b hotfix/$new_branch_name master"
-
-      echo "* Repo: $(__git_repo_url)"
-      echo "* From: master"
-      echo "*   To: hotfix/$new_branch_name"
-      echo "=> $cmd"
-      $cmd
-    fi
-  fi
-}
+# hotfix() {
+#   __current_dir_using_git || return
+#
+#   if [ -z "$1" ]; then
+#     echo "-----> ERROR: No branch name given!"
+#   else
+#     if [ "$(__current_branch)" != "master" ]; then
+#       echo "-----> ERROR: Hotfix branches must branch from the 'master' branch."
+#       echo "-----> Stash or commit your local changes then checkout the 'master' branch."
+#     else
+#       local new_branch_name=$(__join_text_with_hyphens $*)
+#       local cmd="git checkout -b hotfix/$new_branch_name master"
+#
+#       echo "* Repo: $(__git_repo_url)"
+#       echo "* From: master"
+#       echo "*   To: hotfix/$new_branch_name"
+#       echo "=> $cmd"
+#       $cmd
+#     fi
+#   fi
+# }
 
 # Read branches
 #----------------------------------------------------------------------
@@ -296,68 +301,45 @@ commit() {
   fi
 }
 
-# Opens browser to submit pull request to appropriate branch.
-#   Certain types of branches can only branch from/to select branches.
-#     feature: from develop to develop (deploy to development/test)
-#     bug:     from develop to develop (deploy to development)
-#     release: from develop to develop/master (deploy to production)
-#     hotfix:  from master  to develop/master (deploy to development/production)
+# Opens browser to submit pull request to specified branch (defaults to "development").
 pull-request() {
   __current_dir_using_git || return
 
   local current_branch=$(__current_branch)
-  local current_branch_type=$(__current_branch_type)
-  local cmd=""
 
   if [ "$current_branch" == "master" ]; then
-    echo "-----> ERROR: cannot submit code directly from master (production) branch!"
-
-  # feature to development
-  elif [ "$current_branch_type" == "feature" ]; then
-    echo "=> submitting Pull Request to development (opens browser)..."
-    open "$(__git_pull_request_url)/development...$current_branch?expand=1"
-
-  # bug to development
-  elif [ "$current_branch_type" == "bug" ]; then
-    echo "=> submitting Pull Request to development (opens browser)..."
-    open "$(__git_pull_request_url)/development...$current_branch?expand=1"
-
-  # refactor to development
-  elif [ "$current_branch_type" == "refactor" ]; then
-    echo "=> submitting Pull Request to development (opens browser)..."
-    open "$(__git_pull_request_url)/development...$current_branch?expand=1"
-
-  # release to development/master
-  elif [ "$current_branch_type" == "release" ]; then
-    echo "Pushing from a RELEASE branch constitutes a code DEPLOY to master and will:"
-    echo "* Automatically merge this release branch with development"
-    echo "* Submit a Pull Request to the master branch"
-    echo "* You may have to manually resolve merge conflicts"
-    echo ""
-
-    # Confirm deployment merges
-    # tput changes text color
-    read -p "$(tput setaf 1)Are you sure you want to submit a Pull Request to master? (Y/N): $(tput sgr 0)" -r
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-      echo ""
-      echo "* Merging code to development..."
-      cmd="git merge --no-ff $current_branch development"
-      echo "  => $cmd"
-      $cmd
-
-      echo "=> submitting Pull Request to master (opens browser)..."
-      open "$(__git_pull_request_url)/$current_branch?expand=1"
+    echo "-----> ERROR: cannot submit Pull Request directly from master (production) branch!"
+  else
+    # Submit Pull Request to specified branch name or default to "development"
+    local to_branch=""
+    if [ -z "$1" ]; then
+      to_branch="development"
     else
-      echo ""
-      echo "Push stopped. No code merged to any branches."
+      to_branch="$1"
     fi
 
-  # hotfix to development/master
-  # elif [ "$current_branch_type" == "hotfix" ]; then
-  #   echo "=> submitting Pull Request to development and master..."
-  #   open "$(__git_pull_request_url)/development...$current_branch?expand=1"
+    echo "=> submitting Pull Request to $to_branch (opens browser)..."
+    open "$(__git_pull_request_url)/$to_branch...$current_branch?expand=1"
+  fi
+}
+
+# Submit Pull Request from development to master branch
+deploy() {
+  __current_dir_using_git || return
+
+  local current_branch=$(__current_branch)
+
+  if [ "$current_branch" == "master" ]; then
+    echo "----> ERROR: cannot deploy from master to master!"
+  fi
+
+  if [ "$current_branch" == "development" ]; then
+    local timestamp=$(__timestamp)
+
+    echo "=> submitting Pull Request to master (opens browser)..."
+    open "$(__git_pull_request_url)/master...development?expand=1&title=Deploy: $timestamp"
   else
-    echo "-----> ERROR: invalid branch to submit Pull Request from/to!"
+    echo "----> ERROR: can only deploy from development branch to master!"
   fi
 }
 
