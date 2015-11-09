@@ -11,7 +11,6 @@
 # feature: from develop to develop (deploy to development/test)
 # bug:     from develop to develop (deploy to development)
 # release: from develop to develop/master (deploy to production)
-# hotfix:  from master  to develop/master (deploy to development/production)
 
 # Helper methods
 #----------------------------------------------------------------------
@@ -174,52 +173,6 @@ refactor() {
     fi
   fi
 }
-
-# New release/... branch; from development
-# release() {
-#   __current_dir_using_git || return
-#
-#   if [ -z "$1" ]; then
-#     echo "-----> ERROR: No branch name given!"
-#   else
-#     if [ "$(__current_branch)" != "development" ]; then
-#       echo "-----> ERROR: Release branches must branch from the 'development' branch."
-#       echo "-----> Stash or commit your local changes then checkout the 'development' branch."
-#     else
-#       local new_branch_name=$(__join_text_with_hyphens $*)
-#       local cmd="git checkout -b release/$new_branch_name development"
-#
-#       echo "* Repo: $(__git_repo_url)"
-#       echo "* From: development"
-#       echo "*   To: release/$new_branch_name"
-#       echo "=> $cmd"
-#       $cmd
-#     fi
-#   fi
-# }
-
-# New hotfix/... branch; from master (production)
-# hotfix() {
-#   __current_dir_using_git || return
-#
-#   if [ -z "$1" ]; then
-#     echo "-----> ERROR: No branch name given!"
-#   else
-#     if [ "$(__current_branch)" != "master" ]; then
-#       echo "-----> ERROR: Hotfix branches must branch from the 'master' branch."
-#       echo "-----> Stash or commit your local changes then checkout the 'master' branch."
-#     else
-#       local new_branch_name=$(__join_text_with_hyphens $*)
-#       local cmd="git checkout -b hotfix/$new_branch_name master"
-#
-#       echo "* Repo: $(__git_repo_url)"
-#       echo "* From: master"
-#       echo "*   To: hotfix/$new_branch_name"
-#       echo "=> $cmd"
-#       $cmd
-#     fi
-#   fi
-# }
 
 # Read branches
 #----------------------------------------------------------------------
@@ -492,8 +445,8 @@ git-workflow() {
     echo ""
     echo "COMMITTING"
     echo "----------"
-    echo "* commit <message> : commit changes locally and push remotely"
-    echo "* pull_request     : submit Pull Request to remote (opens browser)"
+    echo "* commit <message>      : commit changes locally and push remotely"
+    echo "* pull_request <branch> : submit Pull Request to remote (opens browser)"
     echo ""
     echo "DELETING"
     echo "--------"
