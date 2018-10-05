@@ -16,7 +16,7 @@
 #----------------------------------------------------------------------
 
 __git_workflow_version() {
-  echo "1.4.0 / 2016-07-06"
+  echo "1.4.1 / 2017-12-14"
 }
 
 # Absolute URL of git repo (git@<host>:<owner>/<repo>.git)
